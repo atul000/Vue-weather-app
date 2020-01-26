@@ -14,6 +14,10 @@
           v-model="query"
           @keypress.enter="fetchWeather"
         />
+        <span class="love"
+          >Made with
+          <img src="https://img.icons8.com/dusk/24/000000/like.png" /> by Atul
+        </span>
       </div>
       <div class="weather-wrap" v-if="typeof weather.main != 'undefined'">
         <div class="location-box">
@@ -164,5 +168,10 @@ main {
   font-weight: 700;
   font-style: italic;
   text-shadow: 3px 6px rgba(0, 0, 0, 0.25);
+}
+
+.love {
+  font-family: "Bowlby One SC", cursive;
+  font-size: 20px;
 }
 </style>
