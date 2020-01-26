@@ -1,17 +1,30 @@
 <template>
-  <div id="app">
+  <div
+    id="app"
+    :class="
+      typeof weather.main != 'undefined' && weather.main.temp > 16 ? 'warm' : ''
+    "
+  >
     <main>
       <div class="search-box">
-        <input type="text" class="search-bar" placeholder="Search..." />
+        <input
+          type="text"
+          class="search-bar"
+          placeholder="Search..."
+          v-model="query"
+          @keypress.enter="fetchWeather"
+        />
       </div>
-      <div class="weather-wrap">
+      <div class="weather-wrap" v-if="typeof weather.main != 'undefined'">
         <div class="location-box">
-          <div class="location">London,England</div>
-          <div class="data">Mondar, 27 jan 2020</div>
+          <div class="location">
+            {{ weather.name }}, {{ weather.sys.country }}
+          </div>
+          <div class="date">{{ dateBuilder() }}</div>
         </div>
         <div class="weather-box">
-          <div class="temp">10°</div>
-          <div class="weather">Rain</div>
+          <div class="temp">{{ Math.round(weather.main.temp) }}°C</div>
+          <div class="weather">{{ weather.weather[0].main }}</div>
         </div>
       </div>
     </main>
@@ -19,12 +32,34 @@
 </template>
 
 <script>
+import axios from "axios";
+import moment from "moment";
+
 export default {
   name: "app",
   data() {
     return {
-      api_key: "1c5f8317f6ed25abb25b3ec2894d6d96"
+      api_key: "67486515362d23b6cc3721f8265eafba",
+      url_base: "http://api.openweathermap.org/data/2.5/",
+      query: "",
+      weather: {}
     };
+  },
+  methods: {
+    fetchWeather() {
+      axios
+        .get(
+          `${this.url_base}weather?q=${this.query}&units=metric&APPID=${this.api_key}`
+        )
+        .then(res => {
+          this.weather = res.data;
+          // eslint-disable-next-line no-console
+          console.log(this.weather);
+        });
+    },
+    dateBuilder() {
+      return moment().format("MMMM Do YYYY");
+    }
   }
 };
 </script>
@@ -42,14 +77,13 @@ body {
 
 #app {
   background-image: url("./assets/cold-bg.jpg");
-  /* height: 100%;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  transition: 0.4s; */
   background-repeat: no-repeat;
   background-position: 0% 0%;
   background-size: 100% 100%;
+}
+
+#app.warm {
+  background-image: url("./assets/warm-bg.jpg");
 }
 
 main {
@@ -88,5 +122,47 @@ main {
   box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.25);
   background-color: rgba(255, 255, 255, 0.75);
   border-radius: 16px 0px 16px 0px;
+}
+
+.location-box .location {
+  color: #fff;
+  font-size: 32px;
+  font-weight: 500;
+  text-align: center;
+  text-shadow: 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+.location-box .date {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 300;
+  font-style: italic;
+  text-align: center;
+}
+
+.weather-box {
+  text-align: center;
+}
+
+.weather-box .temp {
+  display: inline-block;
+  padding: 10px 25px;
+  color: #fff;
+  font-size: 102px;
+  font-weight: 900;
+
+  text-shadow: 3px 6px rgba(0, 0, 0, 0.25);
+  background-color: rgba(255, 255, 255, 0.25);
+  border-radius: 16px;
+  margin: 30px 0px;
+  box-shadow: 3px 6px rgba(0, 0, 0, 0.25);
+}
+
+.weather-box .weather {
+  color: #fff;
+  font-size: 48px;
+  font-weight: 700;
+  font-style: italic;
+  text-shadow: 3px 6px rgba(0, 0, 0, 0.25);
 }
 </style>
