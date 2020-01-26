@@ -1,32 +1,82 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
+    <main>
+      <div class="search-box">
+        <input type="text" class="search-bar" placeholder="Search..." />
+      </div>
+    </main>
   </div>
 </template>
 
+<script>
+export default {
+  name: "app",
+  data() {
+    return {
+      api_key: "1c5f8317f6ed25abb25b3ec2894d6d96"
+    };
+  }
+};
+</script>
+
 <style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "montserrat", sans-serif;
+}
+
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  background-image: url("./assets/cold-bg.jpg");
+  /* height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  transition: 0.4s; */
+  background-repeat: no-repeat;
+  background-position: 0% 0%;
+  background-size: 100% 100%;
 }
 
-#nav {
-  padding: 30px;
+main {
+  min-height: 100vh;
+  padding: 25px;
+
+  background-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.25),
+    rgba(0, 0, 0, 0.75)
+  );
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.search-box {
+  width: 100%;
+  margin-bottom: 30px;
 }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
+.search-box .search-bar {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  color: #313131;
+  font-size: 20px;
+  appearance: none;
+  border: none;
+  outline: none;
+  background: none;
+  box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.25);
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 0px 16px 0px 16px;
+  transition: 0.4s;
+}
+
+.search-box .search-bar:focus {
+  box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.25);
+  background-color: rgba(255, 255, 255, 0.75);
+  border-radius: 16px 0px 16px 0px;
 }
 </style>
