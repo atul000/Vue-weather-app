@@ -4,6 +4,16 @@
       <div class="search-box">
         <input type="text" class="search-bar" placeholder="Search..." />
       </div>
+      <div class="weather-wrap">
+        <div class="location-box">
+          <div class="location">London,England</div>
+          <div class="data">Mondar, 27 jan 2020</div>
+        </div>
+        <div class="weather-box">
+          <div class="temp">10°</div>
+          <div class="weather">Rain</div>
+        </div>
+      </div>
     </main>
   </div>
 </template>
