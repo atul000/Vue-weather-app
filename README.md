@@ -1,4 +1,4 @@
-# weather-app
+# Vue-Weather-App
 
 ## Project setup
 ```
